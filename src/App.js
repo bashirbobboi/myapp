@@ -1,7 +1,8 @@
 import { Component } from 'react';
 
-import logo from './logo.svg';
+import CardList from './components/card-list/card-list.component';
 import './App.css';
+
 
 class App extends Component {
   constructor() {
@@ -17,7 +18,8 @@ class App extends Component {
     console.log('componentDidMount');
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((response) => response.json())
-      .then((users) => this.setState(() => {
+      .then((users) => 
+        this.setState(() => {
         return {companies: users}
       }, 
       () => {
@@ -46,20 +48,9 @@ class App extends Component {
 
     return (
     <div className="App">
-      <input 
-        className='search-box' 
-        type='search' 
-        placeholder='Search Companies' 
-        onChange={onSearchChange}
-      />
-      {
-        result.map((company) => {
-          return <div key={company.key}>
-            <h1>{company.name}</h1>
-            </div>
-            
-        })
-      }
+      
+     
+      <CardList companies = {result}/>
     </div>
   );
 
