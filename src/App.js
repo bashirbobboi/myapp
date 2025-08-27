@@ -7,22 +7,28 @@ import './App.css';
 const App = () => {
   const [searchField, setSearchField] = useState('')
   const [companies, setCompanies] = useState([]); 
-
-  console.log("render");
+  const [result, setResult] = useState(companies);
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
-    .then((response) => response.json())
-    .then((users) => setCompanies(users))
+      .then((response) => response.json())
+      .then((users) => setCompanies(users))
   }, [])
 
-  
+  useEffect(() => {
+    const newResult = companies.filter((company) => {
+      return company.name.toLocaleLowerCase().includes(searchField)
+    });
+    
+    setResult(newResult);
+  }, [companies, searchField])
+
 
   const onSearchChange = (event) => {
-          console.log('event.target.value')
           const searchFieldString = event.target.value.toLocaleLowerCase();
           setSearchField(searchFieldString)
         } 
+    
 
   return (
     <div className="App">
@@ -33,7 +39,7 @@ const App = () => {
         onChangeHandler={onSearchChange}
         placeholder='Search Companies' 
       />
-      {/* <CardList companies = {result}/> */}
+      {<CardList companies = {result}/>}
     </div>
   )
  
