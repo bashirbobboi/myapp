@@ -1,11 +1,46 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
 import './App.css';
 
+const App = () => {
+  const [searchField, setSearchField] = useState('')
+  const [companies, setCompanies] = useState([]); 
 
-class App extends Component {
+  console.log("render");
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then((response) => response.json())
+    .then((users) => setCompanies(users))
+  }, [])
+
+  
+
+  const onSearchChange = (event) => {
+          console.log('event.target.value')
+          const searchFieldString = event.target.value.toLocaleLowerCase();
+          setSearchField(searchFieldString)
+        } 
+
+  return (
+    <div className="App">
+      <h1 className='app-title'>Monsters YellowPages</h1>
+      
+      <SearchBox
+        className = 'monsters-search-box' 
+        onChangeHandler={onSearchChange}
+        placeholder='Search Companies' 
+      />
+      {/* <CardList companies = {result}/> */}
+    </div>
+  )
+ 
+
+}
+
+/*class App extends Component {
   constructor() {
     super();
     this.state = {
@@ -65,5 +100,5 @@ class App extends Component {
   }
   
 }
-
+*/
 export default App;
