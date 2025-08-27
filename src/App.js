@@ -9,6 +9,8 @@ const App = () => {
   const [companies, setCompanies] = useState([]); 
   const [result, setResult] = useState(companies);
 
+  console.log("render");
+
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((response) => response.json())
@@ -36,8 +38,8 @@ const App = () => {
       
       <SearchBox
         className = 'monsters-search-box' 
-        onChangeHandler={onSearchChange}
-        placeholder='Search Companies' 
+        placeholder='Search Companies'
+        onChangeHandler={onSearchChange} 
       />
       {<CardList companies = {result}/>}
     </div>
